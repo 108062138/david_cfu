@@ -32,14 +32,19 @@ class SIMDEngine extends Module {
 
   controller.io.cmd_payload <> io.cmd_payload
   controller.io.rsp_payload <> io.rsp_payload
+  controller.io.rs1 := io.cmd_payload.bits.rs1.asUInt
+  controller.io.rs2 := io.cmd_payload.bits.rs2.asUInt
 
   controller.io.rsMatch         := register.io.rsMatch
+
   addSubActivationUnit.io.opSel := controller.io.addSubOpSel
   addSubActivationUnit.io.rs1   := io.cmd_payload.bits.rs1.asUInt
   addSubActivationUnit.io.rs2   := io.cmd_payload.bits.rs2.asUInt
   mulUnit.io.opSel              := controller.io.mulOpSel
   mulUnit.io.rs1                := io.cmd_payload.bits.rs1.asUInt
   mulUnit.io.rs2                := io.cmd_payload.bits.rs2.asUInt
+  mulUnit.io.scale_factor       := controller.io.scale_factor
+  mulUnit.io.zero_point         := controller.io.zero_point
   register.io.rs1               := io.cmd_payload.bits.rs1.asUInt
   register.io.rs2               := io.cmd_payload.bits.rs2.asUInt
   register.io.rdMsbIn           := mulUnit.io.rdMsb
